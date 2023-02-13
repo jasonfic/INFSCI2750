@@ -15,12 +15,12 @@ import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.mapreduce.Mapper.Context;
 
-public class NGram_Mapper extends MapReduceBase implements Mapper<LongWritable,Text,Text,IntWritable> {
+public abstract class NGram_Mapper implements Mapper<Object,Text,Text,IntWritable> {
 
     private final static IntWritable one = new IntWritable(1);
     private Text word = new Text();
     
-    public void map(LongWritable key, Text value, OutputCollector<Text,IntWritable> output, Reporter reporter, Context context) throws IOException{
+    public void map(Object key, Text value, Context context) throws IOException, InterruptedException{
     	Configuration conf = context.getConfiguration();
     	int n = conf.getInt("n", 1);
     	
@@ -38,7 +38,7 @@ public class NGram_Mapper extends MapReduceBase implements Mapper<LongWritable,T
         StringTokenizer  tokenizer = new StringTokenizer(line);
         while (tokenizer.hasMoreTokens()){
             word.set(tokenizer.nextToken());
-            output.collect(word, one);
+            context.write(word, one);
         }
     }
 
