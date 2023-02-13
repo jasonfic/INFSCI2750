@@ -14,11 +14,21 @@ import org.apache.hadoop.mapred.TextOutputFormat;
 
 public class NGram_Runner {
 	
+	private static int n = 1;
+	
 	public static void main(String[] args) throws IOException{
+		
+		// Collect n value from command line input while avoiding out of bounds exceptions
+		// Code adapted from https://stackoverflow.com/a/9203661
+		for (int i=0; i < args.length; ++i) {
+		    if ("-n".equals(args[i])) {
+		    	n = Integer.parseInt(args[++i]);
+		    }
+		}
     	
 		JobConf conf = new JobConf(NGram_Runner.class);
 		conf.setJobName("NGramCounter");
-		conf.setInt("n", 1);
+		conf.setInt("n", n);
 		conf.setOutputKeyClass(Text.class);
 		conf.setOutputValueClass(IntWritable.class);
 		conf.setMapperClass(NGram_Mapper.class);
