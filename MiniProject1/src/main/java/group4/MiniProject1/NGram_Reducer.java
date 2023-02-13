@@ -8,16 +8,17 @@ import org.apache.hadoop.mapred.MapReduceBase;
 import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reducer;
 import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.mapreduce.Mapper.Context;
 
-public class NGram_Reducer  extends MapReduceBase implements Reducer<Text,IntWritable,Text,IntWritable> {
+public abstract class NGram_Reducer  extends MapReduceBase implements Reducer<Text,IntWritable,Text,IntWritable> {
 	
-	public void reduce(Text key, Iterator<IntWritable> values,OutputCollector<Text,IntWritable> output, Reporter reporter) throws IOException {
+	public void reduce(Text key, Iterator<IntWritable> values, Context context) throws IOException, InterruptedException {
 		int sum=0;
 		
         while (values.hasNext()) {
             sum+=values.next().get();
         }
         
-        output.collect(key,new IntWritable(sum));
+        context.write(key, new IntWritable(sum));
 	}
 }
