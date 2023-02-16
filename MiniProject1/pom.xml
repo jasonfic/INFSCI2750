@@ -4,7 +4,7 @@
 
   <groupId>group4</groupId>
   <artifactId>MiniProject1</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>MiniProject1</name>
@@ -19,7 +19,8 @@
 	      <groupId>org.apache.hadoop</groupId>
 	      <artifactId>hadoop-common</artifactId>
 	      <version>3.2.1</version>
-	  </dependency>        <dependency>
+	  </dependency>        
+	  <dependency>
 	      <groupId>org.apache.hadoop</groupId>
 	      <artifactId>hadoop-mapreduce-client-core</artifactId>
 	      <version>3.2.1</version>
