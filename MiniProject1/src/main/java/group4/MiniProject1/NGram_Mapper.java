@@ -23,6 +23,8 @@ public abstract class NGram_Mapper implements Mapper<Object,Text,Text,IntWritabl
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException{
     	Configuration conf = context.getConfiguration();
     	int n = conf.getInt("n", 1);
+    	System.out.print("Mapper value for n: ");
+    	System.out.println(n);
     	
         String input = value.toString();
         input = input.replaceAll("\\s+", "");
