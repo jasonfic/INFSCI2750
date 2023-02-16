@@ -19,12 +19,11 @@ public class NGram_Runner {
 	public static void main(String[] args) throws IOException{
 		
 		// Collect n value from command line input while avoiding out of bounds exceptions
-		// Code adapted from https://stackoverflow.com/a/9203661
-		for (int i=0; i < args.length; ++i) {
-		    if ("-n".equals(args[i])) {
-		    	n = Integer.parseInt(args[++i]);
-		    }
+		if (args.length > 2) {
+			n = Integer.parseInt(args[2]);
 		}
+		System.out.print("Text split into chunks of size: ");
+		System.out.println(n);
     	
 		JobConf conf = new JobConf(NGram_Runner.class);
 		conf.setJobName("NGramCounter");
