@@ -1,4 +1,4 @@
-package com.example;
+package group4.MiniProject1;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
