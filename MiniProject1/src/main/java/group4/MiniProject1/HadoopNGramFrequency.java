@@ -38,8 +38,9 @@ public class HadoopNGramFrequency {
 	    	System.out.print("Mapper max byte value: ");
 	    	System.out.println(maxBytes);
 	    	
+	    	// Convert input text to string and remove all non-alphabetical characters
 	        String input = value.toString();
-	        input = input.replaceAll("\\s+", "");
+	        input = input.replaceAll("[^\\\\p{Alpha}]+", "");
 	        
 	        // Adapted from https://stackoverflow.com/questions/119328/how-do-i-truncate-a-java-string-to-fit-in-a-given-number-of-bytes-once-utf-8-en
 	        Charset charset = Charset.forName("UTF-8");
