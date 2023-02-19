@@ -1,4 +1,4 @@
-package com.example;
+package org.example;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -34,36 +34,40 @@ public class LogAnalyze4 {
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
         System.exit(job.waitForCompletion(true) ? 0 : 1);
-
     }
+
     public static class accessLogMap extends Mapper<Object, Text, Text, IntWritable> {
         private final static IntWritable valueOne = new IntWritable(1);
+        private Text ipAddr = new Text();
+
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String textValue = value.toString();
-            int quoteIndex = textValue.indexOf('\"');
-            int spaceIndex1 = textValue.indexOf(" ", quoteIndex);
-            int spaceIndex2 = textValue.indexOf(" ", spaceIndex1+1);
-            if(spaceIndex1!=-1 && spaceIndex2!=-1){
-                String url = textValue.substring(spaceIndex1+1, spaceIndex2);
-                context.write(new Text(url), valueOne);
+            int firstSpaceIndex = textValue.indexOf(' ');
+            int secondSpaceIndex = textValue.indexOf(' ', firstSpaceIndex+1);
+            if(firstSpaceIndex != -1 && secondSpaceIndex != -1) {
+                ipAddr.set(textValue.substring(0, secondSpaceIndex));
+                context.write(ipAddr, valueOne);
             }
         }
     }
 
     public static class accessLogReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
         static int max = 0;
-        Text pathMax = new Text();
+        Text ipMax = new Text();
+        
         public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             int sum = 0;
-            for (IntWritable i : values) sum += i.get();
-            if(max<sum){
+            for (IntWritable i : values) {
+                sum += i.get();
+            }
+            if(sum > max) {
                 max = sum;
-                pathMax.set(key);
+                ipMax.set(key);
             }
         }
-        public void cleanup(Context context) throws IOException, InterruptedException{
-            context.write(pathMax, new IntWritable(max) );
+        
+        public void cleanup(Context context) throws IOException, InterruptedException {
+            context.write(ipMax, new IntWritable(max));
         }
     }
-
 }
