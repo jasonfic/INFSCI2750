@@ -18,9 +18,9 @@ class Server:
 
     # Use insert syntax to add new key value pair to the target table
     def add_data(self, key, value):
-        self.session.execute(f"INSERT INTO TABLE {self.table} ({key}) VALUES ({value})")
+        self.session.execute(f"INSERT INTO {self.table}({key}) VALUES ({value});")
 
 
     # Retrieve value by key
     def get_data(self, key):
-        self.session.execute(f"SELECT value FROM {self.table} WHERE key = {key}")
+        self.session.execute(f"SELECT value FROM {self.table} WHERE key = {key};")
