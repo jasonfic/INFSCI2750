@@ -17,19 +17,23 @@ class QueryClient:
 
     # get proof from server's merkle tree
     def retrieve_verification_path_by_tree(self, key_index):
-        pass
+        mt = self.server.merkle_tree
+        return mt.get_proof(key_index)
 
     # get index from server's merkle tree
     def retrieve_key_index_in_tree(self,key):
-        pass
+        mt = self.server.merkle_tree
+        return mt.get_leaf(key)
 
     # get merkle root from blockchain
     def retrieve_root_from_blockchain(self):
-        pass
+        return self.blockchain.get_merkle_root()
 
     #Query clients issue query verifications
     def query_verification(self, retrieved_value, proofs, root_from_contract):
-        pass
+        mt = self.server.merkle_tree
+        target_hash = self.retrieve_key_index_in_tree(retrieved_value)
+        return mt.validate_proof(proofs, target_hash, root_from_contract)
 
 
 
