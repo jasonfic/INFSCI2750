@@ -11,16 +11,16 @@ class Server:
 
         # Create keyspace and corresponding table
         self.session.execute(
-            "CREATE KEYSPACE IF NOT EXISTS " + self.keyspace + " WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor' : 1};")
+            "CREATE KEYSPACE IF NOT EXISTS " + self.keyspace + " WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor' : 1}")
         self.session.set_keyspace(self.keyspace)
-        self.session.execute(f"CREATE TABLE IF NOT EXISTS {self.table} (key text PRIMARY KEY, value text);")
+        self.session.execute(f"CREATE TABLE IF NOT EXISTS {self.table} (key text PRIMARY KEY, value text)")
 
 
     # Use insert syntax to add new key value pair to the target table
     def add_data(self, key, value):
-        self.session.execute(f"INSERT INTO {self.table}({key}) VALUES ({value});")
+        self.session.execute(f"INSERT INTO {self.table}({key}) VALUES ({value})")
 
 
     # Retrieve value by key
     def get_data(self, key):
-        self.session.execute(f"SELECT value FROM {self.table} WHERE key = {key};")
+        self.session.execute(f"SELECT value FROM {self.table} WHERE key = {key}")
