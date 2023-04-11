@@ -19,7 +19,9 @@ class DataOwner:
     def build_merkle_tree(self):
         mt = merkletools.MerkleTools()
         for k, v in self.data:
-            mt.add_leaf(str(k) + ":" + str(v))
+            print("Key: " + str(k))
+            print("Value: " + str(v))
+            mt.add_leaf(str(k) + ":" + str(v), True)
 
         mt.make_tree()
         self.merkle_tree = mt
