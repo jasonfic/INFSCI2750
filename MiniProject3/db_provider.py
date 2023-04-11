@@ -3,7 +3,8 @@ import hashlib
 import json
 class Server:
     def __init__(self):
-        self.cluster = Cluster()
+        self.cluster = Cluster(port=7545)
+        #self.cluster = Cluster(['127.0.0.1', 7545])
         self.session = self.cluster.connect()
         self.merkle_tree = None
         self.keyspace = "project3"  # keyspace(database) name for storing data
