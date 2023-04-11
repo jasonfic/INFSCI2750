@@ -22,7 +22,7 @@ class DataOwner:
             mt.add_leaf(str(k) + ":" + str(v))
 
         mt.make_tree()
-        self.merkle_tree = mt.get_tree_ready_state()
+        self.merkle_tree = mt
 
     # upload self.merkle_tree to self.server
     def upload_merkle_tree_to_server(self):
