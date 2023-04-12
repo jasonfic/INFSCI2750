@@ -1,46 +1,37 @@
-from db_provider import Server
-import merkletools
-class DataOwner:
-    #init data owner with the key value data
-    #specify the server object
-    def __init__(self,key_value_data,server,blockchain):
-        self.data= key_value_data
-        self.server= server
+from cassandra.cluster import Cluster
+import hashlib
+import json
+class Server:
+    def __init__(self):
+        self.cluster = Cluster(['10.254.3.194', '10.254.1.229', '10.254.2.185'])
+        self.session = self.cluster.connect()
         self.merkle_tree = None
-        self.blockchain = blockchain
+        self.keyspace = "project3"  # keyspace(database) name for storing data
+        self.table = "data" # table name for storing data
 
-    #insert data to self.server
-    def insert_data_to_server(self):
-        for k, v in self.data.items():
-            self.server.add_data(k, v)
-
-    # build merkle tree on data owner side to get the merkle root, key+value as values
-    # You can use functions provided by merkletools
-    def build_merkle_tree(self):
-        mt = merkletools.MerkleTools()
-        for k, v in self.data.items():
-            print("Key: " + str(k))
-            print("Value: " + str(v))
-            mt.add_leaf(str(k) + ":" + str(v), True)
-
-        mt.make_tree()
-        self.merkle_tree = mt
-
-    # upload self.merkle_tree to self.server
-    def upload_merkle_tree_to_server(self):
-        self.server.merkle_tree = self.merkle_tree
+        # Create keyspace and corresponding table
+        self.session.execute(
+            "CREATE KEYSPACE IF NOT EXISTS " + self.keyspace + " WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor' : 1};")
+        self.session.set_keyspace(self.keyspace)
+        self.session.execute("CREATE TABLE IF NOT EXISTS " + self.table + " (key text PRIMARY KEY, value text);")
 
 
-    # get merkle root from self.merkle_tree
-    def get_merkle_root(self):
-        return self.merkle_tree.get_merkle_root()
+    # Use insert syntax to add new key value pair to the target table
+    def add_data(self, key, value):
+        # kv = {key: value}
+        # json_kv = json.dumps(kv).encode('utf-8')
+        # hash = hashlib.sha256()
+        # hash.update(json_kv)
+        # query = "INSERT INTO " + self.table + "(key) VALUES (" + hash.hexdigest() + ");"
+        # print(query)
+        # self.session.execute(query)
+        query = "INSERT INTO " + self.table + "(key, value) VALUES ('" + key + "', '" + value + "');"
+        print(query)
+        self.session.execute(query)
 
-    #upload merkle root to self.blockchains
-    def upload_merkle_root_to_blockchain(self):
-        root = self.get_merkle_root()
-        self.blockchain.set_merkle_root(root)
 
-
-
-
-
+    # Retrieve value by key
+    def get_data(self, key):
+        query = "SELECT value FROM " + self.table + " WHERE key = '" + key + "';"
+        print(query)
+        self.session.execute(query)
