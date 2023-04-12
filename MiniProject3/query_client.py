@@ -27,7 +27,7 @@ class QueryClient:
     # get index from server's merkle tree
     def retrieve_key_index_in_tree(self,key):
         mt = self.server.merkle_tree
-        return mt.get_leaf(key)
+        return mt.get_leaf_index(key)
 
     # get merkle root from blockchain
     def retrieve_root_from_blockchain(self):
@@ -37,6 +37,8 @@ class QueryClient:
     def query_verification(self, retrieved_value, proofs, root_from_contract):
         mt = self.server.merkle_tree
         target_hash = self.retrieve_key_index_in_tree(retrieved_value)
+        print("Blockchain roots match?: ")
+        print(self.retrieve_root_from_blockchain() == root_from_contract)
         return mt.validate_proof(proofs, target_hash, root_from_contract)
 
 
