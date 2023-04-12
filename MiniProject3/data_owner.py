@@ -11,14 +11,14 @@ class DataOwner:
 
     #insert data to self.server
     def insert_data_to_server(self):
-        for k, v in self.data:
+        for k, v in self.data.items():
             self.server.add_data(k, v)
 
     # build merkle tree on data owner side to get the merkle root, key+value as values
     # You can use functions provided by merkletools
     def build_merkle_tree(self):
         mt = merkletools.MerkleTools()
-        for k, v in self.data:
+        for k, v in self.data.items():
             print("Key: " + str(k))
             print("Value: " + str(v))
             mt.add_leaf(str(k) + ":" + str(v), True)
