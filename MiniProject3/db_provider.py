@@ -26,11 +26,11 @@ class Server:
         # query = "INSERT INTO " + self.table + "(key) VALUES (" + hash.hexdigest() + ");"
         # print(query)
         # self.session.execute(query)
-        query = "INSERT INTO " + self.table + "(key, value) VALUES (" + key + "," + value + ");"
+        query = "INSERT INTO " + self.table + "(key, value) VALUES ('" + key + "', '" + value + "');"
         print(query)
         self.session.execute(query)
 
 
     # Retrieve value by key
     def get_data(self, key):
-        self.session.execute("SELECT value FROM " + self.table + " WHERE key = " + key + ";")
+        self.session.execute("SELECT value FROM " + self.table + " WHERE key = '" + key + "';")
