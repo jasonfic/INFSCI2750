@@ -23,7 +23,9 @@ class Server:
         json_kv = json.dumps(kv).encode('utf-8')
         hash = hashlib.sha256()
         hash.update(json_kv)
-        self.session.execute("INSERT INTO " + self.table + "(key) VALUES (" + hash.hexdigest() + ");")
+        query = "INSERT INTO " + self.table + "(key) VALUES (" + hash.hexdigest() + ");"
+        print(query)
+        self.session.execute(query)
         # self.session.execute("INSERT INTO " + self.table + "(" + key + ") VALUES (" + value + ");")
 
 
