@@ -19,14 +19,14 @@ class Server:
 
     # Use insert syntax to add new key value pair to the target table
     def add_data(self, key, value):
-        kv = {key: value}
-        json_kv = json.dumps(kv).encode('utf-8')
-        hash = hashlib.sha256()
-        hash.update(json_kv)
-        query = "INSERT INTO " + self.table + "(key) VALUES (" + hash.hexdigest() + ");"
-        print(query)
-        self.session.execute(query)
-        # self.session.execute("INSERT INTO " + self.table + "(" + key + ") VALUES (" + value + ");")
+        # kv = {key: value}
+        # json_kv = json.dumps(kv).encode('utf-8')
+        # hash = hashlib.sha256()
+        # hash.update(json_kv)
+        # query = "INSERT INTO " + self.table + "(key) VALUES (" + hash.hexdigest() + ");"
+        # print(query)
+        # self.session.execute(query)
+        self.session.execute("INSERT INTO " + self.table + "(key, value) VALUES (" + key + "," + value + ");")
 
 
     # Retrieve value by key
