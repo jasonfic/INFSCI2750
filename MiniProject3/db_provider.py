@@ -35,3 +35,4 @@ class Server:
         query = "SELECT value FROM " + self.table + " WHERE key = '" + key + "';"
         print(query)
         self.session.execute(query)
+        return self.session.fetchone()
