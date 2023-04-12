@@ -4,7 +4,7 @@ import json
 class Server:
     def __init__(self):
         self.cluster = Cluster(['10.254.3.194'])
-        #self.cluster = Cluster(['127.0.0.1'], port=7545)
+        # self.cluster = Cluster(['127.0.0.1'], port=7545)
         self.session = self.cluster.connect()
         self.merkle_tree = None
         self.keyspace = "project3"  # keyspace(database) name for storing data
@@ -19,7 +19,12 @@ class Server:
 
     # Use insert syntax to add new key value pair to the target table
     def add_data(self, key, value):
-        self.session.execute("INSERT INTO " + self.table + "(" + key + ") VALUES (" + value + ");")
+        kv = {key: value}
+        json_kv = json.dumps(kv).encode('utf-8')
+        hash = hashlib.sha256()
+        hash.update(json_kv)
+        self.session.execute("INSERT INTO " + self.table + "(key) VALUES (" + hash.hexdigest() + ");")
+        # self.session.execute("INSERT INTO " + self.table + "(" + key + ") VALUES (" + value + ");")
 
 
     # Retrieve value by key
