@@ -13,7 +13,9 @@ class QueryClient:
 
     #perform query to server
     def query_by_key(self,key):
-        return self.server.get_data(key)
+        value = self.server.get_data(key)
+        print(value)
+        return value
 
     # get proof from server's merkle tree
     def retrieve_verification_path_by_tree(self, key_index):
