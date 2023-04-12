@@ -34,5 +34,5 @@ class Server:
     def get_data(self, key):
         query = "SELECT value FROM " + self.table + " WHERE key = '" + key + "';"
         print(query)
-        self.session.execute(query)
-        return self.session.fetchone()
+        result = self.session.execute(query)
+        return result
