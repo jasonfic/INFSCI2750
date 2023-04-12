@@ -32,4 +32,5 @@ class Server:
 
     # Retrieve value by key
     def get_data(self, key):
-        self.session.execute("SELECT value FROM " + self.table + " WHERE key = '" + key + "';")
+        query = "SELECT value FROM " + self.table + " WHERE key = '" + key + "';"
+        self.session.execute(query)
