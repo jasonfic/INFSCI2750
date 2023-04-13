@@ -20,10 +20,10 @@ class Blockchain:
         return self.contract_instance.functions.getMerkleRoot().call()
 
     def compile_contract(self):
-        install_solc("0.5.0")
+        #install_solc("0.5.0")
         compiled_sol = compile_source(
             '''
-            pragma solidity 0.5.0;
+            pragma solidity 0.4.15;
             contract Verify{
                 string merkleRoot;
 
