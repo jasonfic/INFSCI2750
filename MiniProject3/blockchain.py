@@ -22,7 +22,7 @@ class Blockchain:
     def compile_contract(self):
         compiled_sol = compile_source(
             '''
-            pragma solidity >0.5.0;
+            pragma solidity 0.4.24;
             contract Verify{
                 string merkleRoot;
 
