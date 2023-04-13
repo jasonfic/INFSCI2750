@@ -3,7 +3,7 @@ import hashlib
 import json
 class Server:
     def __init__(self):
-        self.cluster = Cluster()
+        self.cluster = Cluster(['10.254.0.191'])
         self.session = self.cluster.connect()
         self.merkle_tree = None
         self.keyspace = "project3"  # keyspace(database) name for storing data
@@ -25,7 +25,10 @@ class Server:
         # query = "INSERT INTO " + self.table + "(key) VALUES (" + hash.hexdigest() + ");"
         # print(query)
         # self.session.execute(query)
-        query = "INSERT INTO " + self.table + "(key, value) VALUES ('" + key + "', '" + value + "');"
+        b_val = value.encode('utf-8')
+        hash = hashlib.sha256()
+        hash.update(b_val)
+        query = "INSERT INTO " + self.table + "(key, value) VALUES ('" + key + "', '" + hash.hexdigest() + "');"
         print(query)
         self.session.execute(query)
 
