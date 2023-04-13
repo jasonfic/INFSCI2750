@@ -15,7 +15,7 @@ class QueryClient:
     def query_by_key(self,key):
         result = self.server.get_data(key)
         for row in result:
-            val = row.value
+            val = result[row] #row.value
             print(val)
             return val
 
