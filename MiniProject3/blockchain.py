@@ -30,7 +30,7 @@ class Blockchain:
                     merkleRoot=_merkleRoot;
                 }
 
-                function getMerkleRoot()view public returns (string memory){
+                function getMerkleRoot() view public returns (string memory){
                     return merkleRoot;
                 }
             }
