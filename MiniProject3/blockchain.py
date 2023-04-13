@@ -20,7 +20,7 @@ class Blockchain:
         return self.contract_instance.functions.getMerkleRoot().call()
 
     def compile_contract(self):
-        #install_solc("0.5.0")
+        install_solc("0.4.15")
         compiled_sol = compile_source(
             '''
             pragma solidity 0.4.15;
@@ -31,7 +31,7 @@ class Blockchain:
                     merkleRoot=_merkleRoot;
                 }
 
-                function getMerkleRoot()view public returns (string memory){
+                function getMerkleRoot() view public returns (string memory){
                     return merkleRoot;
                 }
             }
