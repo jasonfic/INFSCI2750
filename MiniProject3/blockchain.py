@@ -1,5 +1,5 @@
 from web3 import Web3
-from solcx import compile_source, install_solc
+from solcx import compile_source, install_solc, compile_solc
 class Blockchain:
     def __init__(self,host):
         self.host= host
@@ -20,6 +20,7 @@ class Blockchain:
         return self.contract_instance.functions.getMerkleRoot().call()
 
     def compile_contract(self):
+        compile_solc("0.4.15")
         install_solc("0.4.15")
         compiled_sol = compile_source(
             '''
