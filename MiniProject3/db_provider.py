@@ -35,9 +35,9 @@ class Server:
 
     # Retrieve value by key
     def get_data(self, key):
-        query = "SELECT JSON value FROM " + self.table + " WHERE key = '" + key + "';"
+        query = "SELECT value FROM " + self.table + " WHERE key = '" + key + "';"
         print(query)
         result = self.session.execute(query)
-        data_list = [dict(row) for row in result]
+        data_list = [dict(row) for row in result.value]
         res_json = json.dumps(data_list)
         return res_json
