@@ -14,7 +14,6 @@ class QueryClient:
     #perform query to server
     def query_by_key(self,key):
         result = self.server.get_data(key)
-        print(result['value'])
         return result['value']
 
     # get proof from server's merkle tree
@@ -41,8 +40,9 @@ class QueryClient:
         index = self.retrieve_key_index_in_tree(retrieved_value)
         target_hash = self.retrieve_verification_path_by_tree(index)
         print("Blockchain roots match?: " + str(self.retrieve_root_from_blockchain() == root_from_contract))
-        print("Query and Merkle Tree values match?: " + str(retrieved_value == target_hash))
-        return mt.validate_proof(proofs, target_hash, root_from_contract)
+        print(target_hash)
+        print("Query and Merkle Tree values match?: " + str(retrieved_value == target_hash[0]))
+        return mt.validate_proof(proofs, retrieved_value, root_from_contract)
 
 
 
