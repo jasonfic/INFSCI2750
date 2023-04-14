@@ -38,11 +38,14 @@ class QueryClient:
     def query_verification(self, retrieved_value, proofs, root_from_contract):
         mt = self.server.merkle_tree
         index = self.retrieve_key_index_in_tree(retrieved_value)
-        target_hash = self.retrieve_verification_path_by_tree(index)
+        mt_leaf = self.retrieve_verification_path_by_tree(index)
+        b_val = retrieved_value.encode('utf-8')
+        target_hash = hashlib.sha256()
+        target_hash.update(b_val)
         print("Blockchain roots match?: " + str(self.retrieve_root_from_blockchain() == root_from_contract))
         print(target_hash)
-        print("Query and Merkle Tree values match?: " + str(retrieved_value == target_hash[0]))
-        return mt.validate_proof(proofs, retrieved_value, root_from_contract)
+        print("Query and Merkle Tree values match?: " + str(target_hash == mt_leaf['left']))
+        return mt.validate_proof(proofs, target_hash.hexdigest(), root_from_contract)
 
 
 
