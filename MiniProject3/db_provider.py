@@ -25,10 +25,11 @@ class Server:
         # query = "INSERT INTO " + self.table + "(key) VALUES (" + hash.hexdigest() + ");"
         # print(query)
         # self.session.execute(query)
-        b_val = value.encode('utf-8')
-        hash = hashlib.sha256()
-        hash.update(b_val)
-        query = "INSERT INTO " + self.table + "(key, value) VALUES ('" + key + "', '" + hash.hexdigest() + "');"
+        # b_val = value.encode('utf-8')
+        # hash = hashlib.sha256()
+        # hash.update(b_val)
+        # query = "INSERT INTO " + self.table + "(key, value) VALUES ('" + key + "', '" + hash.hexdigest() + "');"
+        query = "INSERT INTO " + self.table + "(key, value) VALUES ('" + key + "', '" + value + "');"
         print(query)
         self.session.execute(query)
 
