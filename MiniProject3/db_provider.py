@@ -38,9 +38,9 @@ class Server:
         query = "SELECT value FROM " + self.table + " WHERE key = '" + key + "';"
         print(query)
         result = self.session.execute(query)
-        str_result = '['
+        row_list = []
         for row in result:
-            str_result += '"{value": "' + row.value + '"}'
-        str_result += ']'
-        res_json = json.loads(str_result)
+            row_list.append({"value": row.value})
+        str_result = ','.join(str(dct) for dct in row_list)
+        res_json = json.loads(f"[{str_result}]")
         return res_json
