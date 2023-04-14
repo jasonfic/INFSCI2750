@@ -17,11 +17,11 @@ class DataOwner:
     # build merkle tree on data owner side to get the merkle root, key+value as values
     # You can use functions provided by merkletools
     def build_merkle_tree(self):
-        mt = merkletools.MerkleTools()
+        mt = merkletools.MerkleTools(hash_type="sha256")
         for k, v in self.data.items():
             print("Key: " + str(k))
             print("Value: " + str(v))
-            mt.add_leaf(str(k) + ":" + str(v), True)
+            mt.add_leaf(v, True)
 
         mt.make_tree()
         self.merkle_tree = mt
