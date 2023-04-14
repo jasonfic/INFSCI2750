@@ -43,6 +43,5 @@ class Server:
             row_list.append({"value": row.value})
         str_result = ','.join(str(dct) for dct in row_list)
         str_result = str_result.replace("'", "\"")
-        print(str_result)
         res_json = json.loads(str_result)
         return res_json
