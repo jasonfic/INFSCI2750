@@ -3,7 +3,7 @@ import hashlib
 import json
 class Server:
     def __init__(self):
-        self.cluster = Cluster()
+        self.cluster = Cluster(['10.254.0.191'])
         self.session = self.cluster.connect()
         self.merkle_tree = None
         self.keyspace = "project3"  # keyspace(database) name for storing data
@@ -35,8 +35,8 @@ class Server:
 
     # Retrieve value by key
     def get_data(self, key):
-        query = "SELECT value FROM " + self.table + " WHERE key = '" + key + "';"
+        query = "SELECT JSON value FROM " + self.table + " WHERE key = '" + key + "';"
         print(query)
-        result = self.session.execute(query).dict_factory()
+        result = self.session.execute(query)
         res_json = json.loads(result)
         return res_json
