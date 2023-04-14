@@ -40,9 +40,8 @@ class Server:
         result = self.session.execute(query)
         row_list = []
         for row in result:
-            row_list.append({'"value"': row.value})
+            row_list.append({"value": row.value})
         str_result = ','.join(str(dct) for dct in row_list)
-        str_result = f"[{str_result}]"
         print(str_result)
         res_json = json.loads(str_result)
         return res_json
