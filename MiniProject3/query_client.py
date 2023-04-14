@@ -44,7 +44,7 @@ class QueryClient:
         target_hash.update(b_val)
         print("Blockchain roots match?: " + str(self.retrieve_root_from_blockchain() == root_from_contract))
         print(target_hash)
-        print("Query and Merkle Tree values match?: " + str(target_hash == mt_leaf['left']))
+        print("Query and Merkle Tree values match?: " + str(target_hash == mt_leaf[0]))
         return mt.validate_proof(proofs, target_hash.hexdigest(), root_from_contract)
 
 
