@@ -14,9 +14,10 @@ class QueryClient:
     #perform query to server
     def query_by_key(self,key):
         result = self.server.get_data(key)
+        print(result)
         for row in result:
             print(row)
-            return row
+            return row.value
 
     # get proof from server's merkle tree
     def retrieve_verification_path_by_tree(self, key_index):
@@ -25,8 +26,12 @@ class QueryClient:
 
     # get index from server's merkle tree
     def retrieve_key_index_in_tree(self,key):
+        i = 0
         mt = self.server.merkle_tree
-        return mt.get_leaf_index(key)
+        for i in range(0, mt.get_leaf_count()):
+            if self.key == mt.get_leaf(i):
+                return i
+        return i
 
     # get merkle root from blockchain
     def retrieve_root_from_blockchain(self):
