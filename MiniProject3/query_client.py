@@ -24,12 +24,13 @@ class QueryClient:
 
     # get index from server's merkle tree
     def retrieve_key_index_in_tree(self,key):
-        i = 0
+        idx = 0
         mt = self.server.merkle_tree
         for i in range(0, mt.get_leaf_count()):
+            print("Tree index " + str(i) + ": " + str(mt.get_leaf(i)))
             if key == mt.get_leaf(i):
-                return i
-        return i
+                idx = i
+        return idx
 
     # get merkle root from blockchain
     def retrieve_root_from_blockchain(self):
