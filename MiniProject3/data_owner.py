@@ -19,8 +19,6 @@ class DataOwner:
     def build_merkle_tree(self):
         mt = merkletools.MerkleTools(hash_type="sha256")
         for k, v in self.data.items():
-            print("Key: " + str(k))
-            print("Value: " + str(v))
             mt.add_leaf(v, True)
 
         mt.make_tree()
