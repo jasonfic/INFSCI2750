@@ -42,5 +42,7 @@ class Server:
         for row in result:
             row_list.append({'"value"': row.value})
         str_result = ','.join(str(dct) for dct in row_list)
-        res_json = json.loads(f"[{str_result}]")
+        str_result = f"[{str_result}]"
+        print(str_result)
+        res_json = json.loads(str_result)
         return res_json
