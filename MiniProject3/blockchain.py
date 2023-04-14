@@ -1,5 +1,5 @@
 from web3 import Web3
-from solcx import compile_source, install_solc, compile_solc
+from solcx import compile_source
 class Blockchain:
     def __init__(self,host):
         self.host= host
@@ -20,11 +20,9 @@ class Blockchain:
         return self.contract_instance.functions.getMerkleRoot().call()
 
     def compile_contract(self):
-        compile_solc("0.4.15")
-        install_solc("0.4.15")
         compiled_sol = compile_source(
             '''
-            pragma solidity 0.4.15;
+            pragma solidity >0.5.0;
             contract Verify{
                 string merkleRoot;
 
@@ -32,7 +30,7 @@ class Blockchain:
                     merkleRoot=_merkleRoot;
                 }
 
-                function getMerkleRoot() view public returns (string memory){
+                function getMerkleRoot()view public returns (string memory){
                     return merkleRoot;
                 }
             }
