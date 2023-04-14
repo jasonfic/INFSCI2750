@@ -27,7 +27,7 @@ class QueryClient:
         i = 0
         mt = self.server.merkle_tree
         for i in range(0, mt.get_leaf_count()):
-            if self.key == mt.get_leaf(i):
+            if key == mt.get_leaf(i):
                 return i
         return i
 
