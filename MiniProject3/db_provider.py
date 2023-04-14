@@ -38,6 +38,6 @@ class Server:
         query = "SELECT value FROM " + self.table + " WHERE key = '" + key + "';"
         print(query)
         result = self.session.execute(query)
-        data_list = [dict(row) for row in result.value]
+        data_list = [dict(value = row.value) for row in result]
         res_json = json.dumps(data_list)
         return res_json
